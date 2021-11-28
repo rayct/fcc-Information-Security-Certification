@@ -1,19 +1,6 @@
 const express = require('express');
 const app = express('helmet');
-app.use(helmet({
-  frameguard: false
-}))
-const express = require('express');
-const app = express('helmet');
-app.use(helmet.xssFilter())
-app.use(helmet.frameguard())
-app.disable("x-powered-by")
-
-app.use(
-  helmet({
-    hidePoweredBy: true,
-})
-);
+let helmet = require('helmet');
 
 
 
@@ -61,7 +48,12 @@ app.use(
 
 module.exports = app;
 const api = require('./server.js');
+app.use(helmet.hidePoweredBy({}));
 app.use(express.static('public'));
+app.use(helmet.frameguard({
+  action: 'deny'
+}));
+app.use(helmet.xssFilter({}));
 app.disable('strict-transport-security');
 app.use('/_api', api);
 app.get("/", function (request, response) {
