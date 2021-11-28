@@ -48,12 +48,14 @@ let helmet = require('helmet');
 
 module.exports = app;
 const api = require('./server.js');
-app.use(helmet.hidePoweredBy({}));
+app.use(helmet.hidePoweredBy());
 app.use(express.static('public'));
 app.use(helmet.frameguard({
   action: 'deny'
 }));
 app.use(helmet.xssFilter({}));
+app.use(helmet.noSniff());
+app.use(helmet.ieNoOpen());
 app.disable('strict-transport-security');
 app.use('/_api', api);
 app.get("/", function (request, response) {
