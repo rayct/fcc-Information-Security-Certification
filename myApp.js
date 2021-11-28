@@ -1,39 +1,7 @@
 const express = require('express');
-const app = express('helmet');
+const app = express();
 let helmet = require('helmet');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+let ninetyDaysInSeconds = 90 * 24 * 60 * 60;
 
 
 
@@ -56,6 +24,19 @@ app.use(helmet.frameguard({
 app.use(helmet.xssFilter({}));
 app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
+app.use(helmet.hsts({
+  maxAge: ninetyDaysInSeconds,
+  force: true
+}))
+// Helmet CSP Directives
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", 'trusted-cdn.com']
+  }
+}));
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.noCache());
 app.disable('strict-transport-security');
 app.use('/_api', api);
 app.get("/", function (request, response) {
