@@ -6,7 +6,6 @@
 // Completing the courses below will help you understand how to protect your website from malicious behavior.
 
 
-
 const express = require('express');
 const app = express();
 
@@ -14,14 +13,6 @@ const app = express();
 let helmet = require('helmet');
 
 let ninetyDaysInSeconds = 90 * 24 * 60 * 60; // <= Ask Browsers to Access Your Site via HTTPS Only with helmet.hsts()
-
-
-
-
-
-
-
-
 
 
 
